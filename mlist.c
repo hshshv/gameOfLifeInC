@@ -39,6 +39,9 @@ item* addItem(mlist* lis, void* val)
 	else
 	{
 		(*(*lis).last).next = itmPtr;
+#ifdef debugging
+		* ((int*)((*(*lis).last).next)) += 0;
+#endif
 		(*itmPtr).previous = (*lis).last;
 		(*lis).last = itmPtr;
 	}
@@ -144,6 +147,7 @@ item* firstPassingItem(mlist* lis, int(*testingFunc)(void*, void*), void* args) 
 }
 void doForEach(mlist* lis, void(*func)(void*, void*), void* args)
 {
+	item* nextItem;
 	if (lis == NULL)
 	{
 		return(NULL);
@@ -151,8 +155,9 @@ void doForEach(mlist* lis, void(*func)(void*, void*), void* args)
 	item* thisItem = (*lis).first;
 	while (thisItem != NULL)
 	{
+		nextItem = (*thisItem).next;
 		func((*thisItem).val, args);
-		thisItem = (*thisItem).next;
+		thisItem = nextItem;
 	}
 }
 void* pop(mlist* lis)

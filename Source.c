@@ -44,36 +44,9 @@ void testLocationsConversion()
 }
 int main(int argc, char* argv[])
 {
-//	testLocationsConversion();
-	chunkLoc printFrom = { 0,0 };
-	chunkLoc printTo = { -1,-1 };
+	chunkLoc printFrom = { 1,1 };
+	chunkLoc printTo = { -2,-2 };
 	chunks = makeList();
-	/*
-	
-	
-	cellLoc loc = { 0, 0 };
-	printchunkLocOf(0, 0);
-	loc.x = 0; loc.y = 0;
-	reviveAt(loc, currentMap);
-	chunkLoc zero = { 0,0 };
-	chunk* zeroChunk = getChunk(zero);
-	printChunksRact(printFrom, printTo);
-
-
-	loc.x = -1; loc.y = 0;
-	reviveAt(loc, currentMap);
-	printChunksRact(printFrom, printTo);
-
-	loc.x = 0; loc.y = -1;
-	reviveAt(loc, currentMap);
-	printChunksRact(printFrom, printTo);
-
-	loc.x = -1; loc.y = -1;
-	reviveAt(loc, currentMap);
-	printChunksRact(printFrom, printTo);
-	//printChunkList(0);
-	return(0);
-	*/
 	makeFirstMap();
 	for (int i = 0; i < 50; ++i)
 	{
@@ -81,7 +54,7 @@ int main(int argc, char* argv[])
 		printChunksRact(printFrom, printTo);
 		doLifeCycle();
 	}
-	//printChunkList(0);
+	printChunkList(0);
 	return(0);
 	
 }

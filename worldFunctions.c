@@ -43,8 +43,8 @@ void checkIfChunkIsAlive_Lambda(void* chunkPtr, void* args_unused)
 	chunk* thisChunk = (chunk*)chunkPtr;
 	if ((*thisChunk).numOfCellsWithNCData == 0)//we should keep chunks that dont have living cells if they have NC data
 	{
-//		deleteItem(chunks, firstPassingItem(chunks, compChunkPtrToChunkLoc, &((*thisChunk).chunkLocation)));
-	//	deleteChunk(thisChunk);
+		deleteItem(chunks, firstPassingItem(chunks, compChunkPtrToChunkLoc, &((*thisChunk).chunkLocation)));
+		deleteChunk(thisChunk);
 	}
 }
 void printDualMapAndChunkLocation_Lambda(void* chunkPtr, void* args_unused)
@@ -162,8 +162,10 @@ chunk* getChunk(chunkLoc cLoc)
 		if (compChunkPtrToChunkLoc(lastChunk, &cLoc) == true) // the requested chunk is the same as the former
 		{
 			thisChunkPtr = lastChunk;
+			return(thisChunkPtr); //?
 		}
 	}
+
 	if (thisChunkPtr == NULL) // request of a chunk that isnt the last, or there is no last chunk: serch for the new chunk
 	{
 		item * thisItem = firstPassingItem(chunks, compChunkPtrToChunkLoc, &cLoc);
@@ -315,7 +317,7 @@ void initializeMap(MapArr* map)
 //main program actions
 void makeFirstMap()
 {
-	MapArr initialMap =
+	cell initialMap[20][20] =
 	{
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -340,9 +342,9 @@ void makeFirstMap()
 	};
 
 	//add living cells to thisMap using reviveAt()
-	for (cellLoc loc = { 0,0 }; loc.x < mapSize; ++loc.x)
+	for (cellLoc loc = { 0,0 }; loc.x < 20; ++loc.x)
 	{
-		for (loc.y = 0; loc.y < mapSize; ++loc.y)
+		for (loc.y = 0; loc.y < 20; ++loc.y)
 		{
 			if (initialMap[loc.x][loc.y] > 0)
 			{
@@ -566,14 +568,15 @@ void deleteChunk(chunk* chunkPtr)
 		Map mapB;
 		Map ncMapA;
 		Map ncMapB;
+		int numOfCellsWithNcData
 	};
 	*/
+	printf("deleted chunk at [%d,%d]\n", (*chunkPtr).chunkLocation.x, (*chunkPtr).chunkLocation.y);
 	free((*chunkPtr).mapA);
 	free((*chunkPtr).mapB);
 	free((*chunkPtr).ncMapA);
 	free((*chunkPtr).ncMapB);
 	free(chunkPtr);
-	printf("deleted chunk at %d", chunkPtr);
 }
 MapArr* makeMap()
 {

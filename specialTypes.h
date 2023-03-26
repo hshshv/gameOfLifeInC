@@ -7,7 +7,7 @@
 #define alive true
 #define debugMode
 #define chunkSize mapSize
-#define mapSize 20
+#define mapSize 10
 
 /*--- TYPES AND STRUCTS ---*/
 #define cell int
